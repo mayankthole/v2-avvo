@@ -105,18 +105,36 @@ echo.
 
 REM Check and install dependencies
 echo [CHECK] Checking dependencies...
+set DEPS_MISSING=0
+
 %PYTHON_CMD% -c "import undetected_chromedriver" >nul 2>&1
-if errorlevel 1 (
+if errorlevel 1 set DEPS_MISSING=1
+
+%PYTHON_CMD% -c "import selenium" >nul 2>&1
+if errorlevel 1 set DEPS_MISSING=1
+
+%PYTHON_CMD% -c "import bs4" >nul 2>&1
+if errorlevel 1 set DEPS_MISSING=1
+
+%PYTHON_CMD% -c "import pandas" >nul 2>&1
+if errorlevel 1 set DEPS_MISSING=1
+
+%PYTHON_CMD% -c "import lxml" >nul 2>&1
+if errorlevel 1 set DEPS_MISSING=1
+
+if %DEPS_MISSING% equ 1 (
     echo [INSTALL] Installing required packages...
-    echo This may take 1-2 minutes, please wait...
+    echo This may take 2-3 minutes, please wait...
     echo.
+    
+    echo Upgrading pip...
     %PYTHON_CMD% -m pip install --quiet --upgrade pip
     if errorlevel 1 (
-        echo [ERROR] Failed to upgrade pip
-        pause
-        exit /b 1
+        echo [WARNING] pip upgrade failed, continuing...
     )
-    %PYTHON_CMD% -m pip install --quiet -r requirements.txt
+    
+    echo Installing packages...
+    %PYTHON_CMD% -m pip install --no-cache-dir -r requirements.txt
     if errorlevel 1 (
         echo.
         echo [ERROR] Failed to install dependencies.
@@ -127,7 +145,15 @@ if errorlevel 1 (
         pause
         exit /b 1
     )
-    echo [OK] Dependencies installed successfully!
+    
+    echo Verifying installation...
+    %PYTHON_CMD% -c "import undetected_chromedriver; import selenium; import bs4; import pandas; import lxml" >nul 2>&1
+    if errorlevel 1 (
+        echo [WARNING] Some packages may not have installed correctly
+        echo Try running: %PYTHON_CMD% -m pip install -r requirements.txt
+    ) else (
+        echo [OK] Dependencies installed and verified!
+    )
 ) else (
     echo [OK] All dependencies are already installed
 )
