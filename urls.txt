@@ -1,0 +1,19 @@
+# Add one URL per line
+# Lines starting with # are ignored
+# Optional: Add DAYS_BACK=365 to set review date filter (default: 365 days if not specified)
+# Examples: DAYS_BACK=365, DAYS_BACK=730, DAYS_BACK=none (for all reviews)
+# DAYS_BACK=365
+
+
+
+
+
+
+DAYS_BACK=730
+
+https://www.avvo.com/attorneys/28204-nc-michael-demayo-1742166.html
+https://www.avvo.com/attorneys/90069-ca-michelle-paul-1896813.html
+https://www.avvo.com/attorneys/94401-ca-haitham-ballout-336338.html
+https://www.avvo.com/attorneys/90036-ca-negin-yamini-3975505.html
+https://www.avvo.com/attorneys/10005-ny-jesse-langel-1005371.html
+
